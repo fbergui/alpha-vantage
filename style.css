@@ -1,0 +1,33 @@
+html,
+body {
+  background-color: dodgerblue;
+}
+
+#wrapper {
+  width: 900px;
+  border: 1px solid black;
+  margin: 30px auto;
+  background-color: white;
+  box-shadow: 0 0 20px 7px black;
+  text-align: center;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  /* margin: 10px; */
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th {
+  height: 60px;
+}
+
+td {
+  height: 30px;
+}
