@@ -1,12 +1,17 @@
 html,
 body {
-  background-color: dodgerblue;
+  background-color: rgb(1, 25, 53);
 }
 
-#wrapper {
-  width: 900px;
+#wrapper{
+  width: 150px;
+  text-align: center;
+}
+
+#wrapperTable {
+  width: 300px;
   border: 1px solid black;
-  margin: 30px auto;
+  margin: 30px ;
   background-color: white;
   box-shadow: 0 0 20px 7px black;
   text-align: center;
@@ -24,10 +29,18 @@ td {
   border: 1px solid black;
 }
 
+h1{
+  margin-top: 20px;
+}
+
 th {
   height: 60px;
 }
 
 td {
+  text-align: center;
   height: 30px;
+}
+nav{
+  background-image: url("img/azioni.jpg");
 }

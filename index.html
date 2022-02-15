@@ -1,41 +1,85 @@
 <html>
 
 <head>
-    <title>Get Stock Quotes</title>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>Indici Borsa</title>
+    <script src="lib/jquery-3.6.0.js" type="application/javascript"></script>
+    <script src="lib/libreria.js" type="application/javascript"></script>
     <script src="index.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 
 <body>
-    <div id="wrapper">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom d-flex flex-column ">
+        <div>
+            <h3>Indicediborsa.it</h3>
+        </div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link mx-2" href="index.html">Home</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="#">boh</a>
+            </li>
+        </ul>
+        <div class="d-flex justify-content-start border-top border-white">
+            <select id="cmbAziende" class="form-select m-2"></select>
+            <input class="form-control m-2" type="search" placeholder="Cerca titolo" aria-label="Search">
+            <button class="btn btn-primary m-2 " type="submit">Cerca</button>
+        </div>
+    </nav>
+
+
+
+
+
+    <div id="wrapperTable" class="text-secondary">
+
         <div id="quote">
-            <table cellspacing="0" cellpadding="3">
+            <table cellspacing="0" cellpadding="4">
                 <tr>
                     <th>Symbol</th>
-                    <th>Last Trade</th>
-                    <th>Last Trade Time</th>
-                    <th>Change</th>
-                    <th>Open</th>
-                    <th>Previous Close</th>
-                    <th>Day's Low</th>
-                    <th>Day's High</th>
-                    <th>Volume</th>
+                    <td id="symbol"></td>
                 </tr>
                 <tr>
-                    <td id="symbol"></td>
+                    <th>Last Trade</th>
                     <td id="lastTrade"></td>
-                    <td id="lastTradeTime"></td>
-                    <td id="change"></td>
-                    <td id="open"></td>
-                    <td id="previousClose"></td>
-                    <td id="daysLow"></td>
-                    <td id="daysHigh"></td>
-                    <td id="volume"></td>
                 </tr>
+                <tr>
+                    <th>Last Trade Time</th>
+                    <td id="lastTradeTime"></td>
+                </tr>
+                <tr>
+                    <th>Change</th>
+                    <td id="change"></td>
+                </tr>
+                <tr>
+                    <th>Open</th>
+                    <td id="open"></td>
+                </tr>
+                <tr>
+                    <th>Previous Close</th>
+                    <td id="previousClose"></td>
+                </tr>
+                <tr>
+                    <th>Day's Low</th>
+                    <td id="daysLow"></td>
+
+                </tr>
+                <tr>
+                    <th>Day's High</th>
+                    <td id="daysHigh"></td>
+                </tr>
+                <th>Volume</th>
+                <td id="volume"></td>
             </table>
         </div>
-    </div>
+
+
+
+
+
 </body>
 
 </html>
