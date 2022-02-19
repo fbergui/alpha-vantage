@@ -35,11 +35,15 @@ h1{
 
 th {
   height: 60px;
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
 }
 
 td {
   text-align: center;
   height: 30px;
+  font-weight: bold;
+  color: black;
 }
 nav{
   background-image: url("img/azioni.jpg");

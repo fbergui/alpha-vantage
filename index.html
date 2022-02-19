@@ -5,6 +5,7 @@
     <script src="lib/jquery-3.6.0.js" type="application/javascript"></script>
     <script src="lib/libreria.js" type="application/javascript"></script>
     <script src="index.js" type="application/javascript"></script>
+    <script src="enviroment.js" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -13,73 +14,64 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom d-flex flex-column ">
         <div>
-            <h3>Indicediborsa.it</h3>
+            <h3>InfoMercati.it</h3>
         </div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link mx-2" href="index.html">Home</a>
             </li>
+            <!---
             <li class="nav-item mx-2">
                 <a class="nav-link" href="#">boh</a>
-            </li>
+            </li>---->
         </ul>
-        <div class="d-flex justify-content-start border-top border-white">
+        <div class="d-flex border-top border-white">
             <select id="cmbAziende" class="form-select m-2"></select>
             <input class="form-control m-2" type="search" placeholder="Cerca titolo" aria-label="Search">
             <button class="btn btn-primary m-2 " type="submit">Cerca</button>
         </div>
     </nav>
-
-
-
-
-
-    <div id="wrapperTable" class="text-secondary">
+    <div id="wrapperTable">
 
         <div id="quote">
             <table cellspacing="0" cellpadding="4">
                 <tr>
-                    <th>Symbol</th>
+                    <th>Simbolo</th>
                     <td id="symbol"></td>
                 </tr>
                 <tr>
-                    <th>Last Trade</th>
+                    <th>Ultimo Scambio</th>
                     <td id="lastTrade"></td>
                 </tr>
                 <tr>
-                    <th>Last Trade Time</th>
+                    <th>Giorno Ultimo Scambio</th>
                     <td id="lastTradeTime"></td>
                 </tr>
                 <tr>
-                    <th>Change</th>
+                    <th>Differenza</th>
                     <td id="change"></td>
                 </tr>
                 <tr>
-                    <th>Open</th>
+                    <th>Apertura</th>
                     <td id="open"></td>
                 </tr>
                 <tr>
-                    <th>Previous Close</th>
+                    <th>Ultima Chiusura</th>
                     <td id="previousClose"></td>
                 </tr>
                 <tr>
-                    <th>Day's Low</th>
+                    <th>Prezzo più basso giornaliero</th>
                     <td id="daysLow"></td>
 
                 </tr>
                 <tr>
-                    <th>Day's High</th>
+                    <th>Prezzo più alto giornaliero</th>
                     <td id="daysHigh"></td>
                 </tr>
                 <th>Volume</th>
                 <td id="volume"></td>
             </table>
         </div>
-
-
-
-
-
 </body>
 
 </html>
