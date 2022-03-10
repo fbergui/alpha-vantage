@@ -24,31 +24,27 @@ table {
 }
 #divCerca
 {
+  width: 300px;
   position: absolute;
-  margin-left: 10px;
   margin-top: 45px;
-  border-left: 1px white solid;
-  border-right: 1px white solid;
-  border-top: 1px white solid;
-  
+  margin-left: -29px;
+  border-radius: 50px;
+  list-style-type: none;
 }
-#divCerca div
+#divCerca span
 {
   background-color: white;
   color: black;
-  width: 300px;
-  border-bottom: 1px #747272 solid;
+  width: 150px;
   cursor: pointer;
+}
+
+#divCerca li
+{
+  border-bottom: 1px solid black;
   
 }
-#ricerca
-{
-  border-radius: 10px;
-}
-.relative
-{
-  position: relative;
-}
+
 table,
 th,
 td {
