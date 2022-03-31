@@ -1,3 +1,4 @@
+"use strict"
 
 const ALPHA_DEMO = "&apikey=demo";
 const urlLocal = "http://localhost:3000";
@@ -15,8 +16,10 @@ let dataPerformance = {};
 let vectGraph = [], vectLabels = [];
 let titolo = "";
 let geocoder, myChart;
+let chart = {}
 
 $(document).ready(function () {
+
     let scriptGoogle = document.createElement('script');
     scriptGoogle.type = 'text/javascript';
     scriptGoogle.src = urlGoogle + '/js?v=3&key=' + MAP_KEY;
@@ -31,10 +34,12 @@ $(document).ready(function () {
 
     function caricaCmb() {
         let i = 0;
+        $("<option>").val("no").html("-seleziona azienda consigliata-").appendTo($("#cmbAziende"))
         for (const indice of indici) {
             $("<option>").val(indice).html(nomeIndice[i]).appendTo($("#cmbAziende"))
             i++;
         }
+        $("#cmbAziende").prop("selectedIndex", 1)
         let url = urlAplha + "function=SECTOR" + ALPHA_KEY;
         $.getJSON(url, function (data) {
             dataPerformance = data;
@@ -60,8 +65,7 @@ $(document).ready(function () {
             let numSplit = parseFloat(dataPerformance[titolo][item].split("%")[0])
             vectGraph.push(numSplit)
         }
-        console.log(vectGraph)
-        let chart = {
+        chart = {
             "type": "bar",
             "data": {
                 "labels": vectLabels,
@@ -99,25 +103,30 @@ $(document).ready(function () {
                 }
             }
         }
-
         let richiesta = inviaRichiesta("PATCH", urlLocal + "/chart", chart)
-
-        $.getJSON("http://localhost:3000/chart", function (data) {
-            let ctx = document.getElementById('myChart').getContext('2d');
-            myChart = new Chart(ctx, data);
+        richiesta.done(function () {
+            richiesta = inviaRichiesta("GET", urlLocal + "/chart")
+            richiesta.fail(errore)
+            richiesta.done(function (data) {
+                let ctx = document.getElementById("myChart").getContext("2d");
+                myChart = new Chart(ctx, data);
+                vectLabels = []
+                vectGraph = []
+            })
         })
-        vectLabels = []
-        vectGraph = []
     }
 
     $("#cmbAziende").on("change", function () {
-        nomeAzienda = $("#cmbAziende>option:selected").text();
-        getGlobalQuotes($("#cmbAziende").val());
-        $("#btnMappa").removeClass("disabled")
+        if($("#cmbAziende>option:selected").val()!="no")
+        {
+            nomeAzienda = $("#cmbAziende>option:selected").text();
+            getGlobalQuotes($("#cmbAziende").val());
+            $("#btnMappa").removeClass("disabled")
+        }
     });
 
     function datiTabella(data) {
-        $("#out>h4>u>span").text(nomeAzienda)
+        $("#out>h4>strong>span").text(nomeAzienda)
         $("#symbol").text(data["Global Quote"]["01. symbol"]);
         let globalQuoteData = data["Global Quote"];
         $("#previousClose").text(globalQuoteData["08. previous close"] + ' $');
@@ -157,19 +166,19 @@ $(document).ready(function () {
         }
 
     }
-
     $("#txtRicerca").keydown(function (e) {
         if (e.keyCode === 32) {
             e.preventDefault();
             return false;
         }
     })
-
     $("#txtRicerca").on("input", function () {
         stringSearch = $(this).val()
         _divCerca.html("")
+        
+        $("#cmbAziende").prop("selectedIndex", 0)
         if ((`${stringSearch.length}`) >= 2) {
-            url = urlAplha + ALPHA_KEY + "&function=SYMBOL_SEARCH&keywords=" + stringSearch + ALPHA_KEY;
+            let url = urlAplha + ALPHA_KEY + "&function=SYMBOL_SEARCH&keywords=" + stringSearch + ALPHA_KEY;
             $.getJSON(url, function (data) {
                 generaSuggerimenti(data.bestMatches)
             }).fail(errore)
@@ -207,12 +216,10 @@ $(document).ready(function () {
         $("#divCerca>li:last-child>span:nth-child(1)").css("border-bottom-left-radius", "10px")
         $("#divCerca>li:last-child>span:nth-child(2)").css("border-bottom-right-radius", "10px")
     }
-
-    $("#cmbPerformance").on("change", function () {
-        myChart.destroy();
+    $("#cmbPerformance").change(function () {
+        myChart.destroy()
         caricaGrafico();
     })
-
     $('#btnMappa').on('click', function () {
         let url = urlLocal + "/map?nome=" + nomeAzienda;
 
