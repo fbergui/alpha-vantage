@@ -9,12 +9,13 @@
     <script src="enviroment.js" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom flex-column ">
-        <h3>InfoMercati.it</h3>
+        <h3><strong>InfoEconomia.it</strong></h3>
         </div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -63,17 +64,36 @@
                         <td id="daysHigh"></td>
                         <td id="volume"></td>
                     </tr>
-                    <tr><td colspan="9">
-                        <button class="btn text-dark disabled" id="btnMappa">Visualizza su Google Maps</button>
-                    </td></tr>
+                    <tr>
+                        <td colspan="9">
+                            <button class="btn text-dark" id="btnMappa" >Visualizza su Google Maps</button>
+                            
+                        </td>
+                    </tr>
                 </table>
-                
+
             </div>
-            
+
+            <div class="modal" tabindex="-1" role="dialog" id="mapAzienda">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Sede Azienda</h5>
+                            <button type="button" id="btnCloseModal"class="btn close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div id="divGrafico">
-                <h4><u>Performance economica generale</u></h4>
+                <h4><u>Tendenze economiche nel tempo</u></h4>
                 <select id="cmbPerformance" class="form-select">
-                    
+
                 </select>
                 <canvas id="myChart"></canvas>
             </div>

@@ -10,58 +10,19 @@ let jsonRicerche = [];
 let j = 0;
 let stringSearch;
 let n = 0;
-let nomeAzienda = "";
+let nomeAzienda = "IBM";
 let dataPerformance = {};
 let vectGraph = [], vectLabels = [];
-let titolo="";
+let titolo = "";
+let geocoder, myChart;
 
-
-let dataGraph = {
-    "type": "bar",
-    "data":{
-    "labels": vectLabels,
-    "datasets": [{
-        "label": titolo,
-        "barPercentage": 0.5,
-        "barThickness": 50,
-        "minBarLength": 100,
-        "borderWidth": 2,
-        "data": vectGraph,
-        "backgroundColor": [
-            "rgb(255, 0, 55)",
-            "rgb(0, 137, 228)",
-            "rgb(241, 173, 0)",
-            "rgb(0, 146, 146)",
-            "rgb(46, 0, 138)",
-            "rgb(233, 116, 0)",
-            "rgb(80, 80, 80)",
-            "rgb(0, 131, 0)",
-            "rgb(94, 92, 1)",
-            "rgb(0, 132, 255)",
-            "rgb(56, 0, 0)"
-        ]
-    }]
-    },
-    "options": {
-        "scales": {
-          "xAxes": [
-            {
-              "ticks": {
-                "beginAtZero": false
-              }
-            }
-          ]
-        }
-      }
-
-};
 $(document).ready(function () {
-
     let scriptGoogle = document.createElement('script');
     scriptGoogle.type = 'text/javascript';
-    scriptGoogle.src = urlGoogle + '/js?v=3&key=' + MAP_KEY;;
+    scriptGoogle.src = urlGoogle + '/js?v=3&key=' + MAP_KEY;
     document.body.appendChild(scriptGoogle);
 
+    let _mappa = $(".modal-body")[0]
     let _divCerca = $("#divCerca");
 
     caricaCmb();
@@ -86,36 +47,76 @@ $(document).ready(function () {
                 else
                     i++;
             }
-            $("#cmbPerformance").prop("selectedIndex",7)
+            $("#cmbPerformance").prop("selectedIndex", 7)
             caricaGrafico();
         })
     }
 
     function caricaGrafico() {
+
         titolo = $("#cmbPerformance>option:selected").text();
-        console.log(dataPerformance)
         for (const item in dataPerformance[titolo]) {
             vectLabels.push(item);
-            let numSplit= parseFloat(dataPerformance[titolo][item].split("%")[0])     
+            let numSplit = parseFloat(dataPerformance[titolo][item].split("%")[0])
             vectGraph.push(numSplit)
         }
-        inviaRichiesta("PATCH", urlLocal + "/chart", dataGraph)
-        
+        console.log(vectGraph)
+        let chart = {
+            "type": "bar",
+            "data": {
+                "labels": vectLabels,
+                "datasets": [{
+                    "label": titolo,
+                    "barPercentage": 0.5,
+                    "barThickness": 50,
+                    "minBarLength": 100,
+                    "borderWidth": 2,
+                    "data": vectGraph,
+                    "backgroundColor": [
+                        "rgb(255, 0, 55)",
+                        "rgb(0, 137, 228)",
+                        "rgb(241, 173, 0)",
+                        "rgb(0, 146, 146)",
+                        "rgb(46, 0, 138)",
+                        "rgb(233, 116, 0)",
+                        "rgb(80, 80, 80)",
+                        "rgb(0, 131, 0)",
+                        "rgb(94, 92, 1)",
+                        "rgb(0, 132, 255)",
+                        "rgb(56, 0, 0)"
+                    ]
+                }]
+            },
+            "options": {
+                "scales": {
+                    "xAxes": [
+                        {
+                            "ticks": {
+                                "beginAtZero": false
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+
+        let richiesta = inviaRichiesta("PATCH", urlLocal + "/chart", chart)
+
         $.getJSON("http://localhost:3000/chart", function (data) {
-        let ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, data);
+            let ctx = document.getElementById('myChart').getContext('2d');
+            myChart = new Chart(ctx, data);
         })
-        vectLabels=[]
-        vectGraph=[]
+        vectLabels = []
+        vectGraph = []
     }
 
     $("#cmbAziende").on("change", function () {
         nomeAzienda = $("#cmbAziende>option:selected").text();
         getGlobalQuotes($("#cmbAziende").val());
+        $("#btnMappa").removeClass("disabled")
     });
 
     function datiTabella(data) {
-
         $("#out>h4>u>span").text(nomeAzienda)
         $("#symbol").text(data["Global Quote"]["01. symbol"]);
         let globalQuoteData = data["Global Quote"];
@@ -192,6 +193,7 @@ $(document).ready(function () {
                     nomeAzienda = suggestion["2. name"];
                     getGlobalQuotes(suggestion["1. symbol"]);
                     _divCerca.html("");
+                    $("#btnMappa").addClass("disabled")
                 }).mouseenter(function () {
                     $("span", this).css("background-color", "#949494")
                 }).mouseleave(function () {
@@ -206,14 +208,33 @@ $(document).ready(function () {
         $("#divCerca>li:last-child>span:nth-child(2)").css("border-bottom-right-radius", "10px")
     }
 
-
-    
-    
-    
-
-    $("#cmbPerformance").on("change",function () {
+    $("#cmbPerformance").on("change", function () {
+        myChart.destroy();
         caricaGrafico();
     })
+
+    $('#btnMappa').on('click', function () {
+        let url = urlLocal + "/map?nome=" + nomeAzienda;
+
+        $('#mapAzienda').modal('show');
+        $.getJSON(url, function (data) {
+            let position = new google.maps.LatLng(data[0].coordinate[0], data[0].coordinate[1]);
+
+            let mapOptions = {
+                'center': position,
+                'zoom': 18,
+            };
+            let map = new google.maps.Map(_mappa, mapOptions);
+
+            map.setCenter(position);
+            new google.maps.Marker({
+                map: map,
+                position: position
+            });
+        })
+    });
+    $("#btnCloseModal").on("click", function () {
+        $('#mapAzienda').modal('hide');
+    });
+
 });
-
-
