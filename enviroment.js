@@ -1,2 +1,0 @@
-const ALPHA_KEY="&apikey=N8Z6KN85A1KXUKDG";
-const MAP_KEY = "AIzaSyBZKYgxbiyRE7DknUpnRP2QHCBVjvLgH7g";
