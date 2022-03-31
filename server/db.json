@@ -1,0 +1,83 @@
+{
+  "chart": {
+    "type": "bar",
+    "data": {
+      "labels": [
+        "Information Technology",
+        "Consumer Discretionary",
+        "Materials",
+        "Financials",
+        "Communication Services",
+        "Health Care",
+        "Industrials",
+        "Consumer Staples",
+        "Real Estate",
+        "Utilities",
+        "Energy"
+      ],
+      "datasets": [
+        {
+          "label": "",
+          "barPercentage": 0.5,
+          "barThickness": 50,
+          "minBarLength": 100,
+          "borderWidth": 2,
+          "data": [
+            123.73,
+            68.94,
+            63.32,
+            54.38,
+            53.44,
+            53.36,
+            41.46,
+            37.75,
+            37.03,
+            28.03,
+            18.99
+          ],
+          "backgroundColor": [
+            "rgb(255, 0, 55)",
+            "rgb(0, 137, 228)",
+            "rgb(241, 173, 0)",
+            "rgb(0, 146, 146)",
+            "rgb(46, 0, 138)",
+            "rgb(233, 116, 0)",
+            "rgb(80, 80, 80)",
+            "rgb(0, 131, 0)",
+            "rgb(94, 92, 1)",
+            "rgb(0, 132, 255)",
+            "rgb(56, 0, 0)"
+          ]
+        }
+      ]
+    },
+    "options": {
+      "scales": {
+        "xAxes": [
+          {
+            "ticks": {
+              "beginAtZero": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "map": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    }
+  ]
+}
